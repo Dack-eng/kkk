@@ -263,15 +263,41 @@
     }
 
     @media (max-width: 640px) {
+      body {
+        overflow: auto;
+        padding: 12px;
+      }
+
       .card { border-radius: 26px; }
+      .card {
+        padding: 20px 16px 20px;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 9vw, 2.7rem);
+      }
+
+      .sub {
+        font-size: 1.03rem;
+        line-height: 1.55;
+      }
+
       button, .tag { width: 100%; text-align: center; }
       .actions { gap: 10px; }
       .hero-top { align-items: flex-start; }
+
+      #message {
+        font-size: clamp(1.05rem, 6.2vw, 1.45rem);
+        padding: 18px 14px;
+        min-height: 90px;
+      }
+
       .corner-btn {
-        right: 12px;
-        bottom: 12px;
+        position: static;
+        margin-top: 12px;
+        width: 100%;
         font-size: 0.95rem;
-        padding: 11px 15px;
+        padding: 12px 15px;
       }
     }
   </style>
