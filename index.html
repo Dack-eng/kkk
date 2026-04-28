@@ -66,6 +66,13 @@
       animation: reveal 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
+    .hero-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
     .pill {
       display: inline-flex;
       align-items: center;
@@ -79,6 +86,25 @@
       font-weight: 800;
       letter-spacing: 0.12em;
       text-transform: uppercase;
+    }
+
+    .mascot {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, #ffd6ea, #fff1f8);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 10px 22px rgba(236, 90, 152, 0.24);
+      animation: bob 2.2s ease-in-out infinite;
+    }
+
+    .mascot-emoji {
+      font-size: 1.85rem;
+      transform-origin: 70% 75%;
+      animation: wave 1.5s ease-in-out infinite;
+      user-select: none;
     }
 
     h1 {
@@ -156,11 +182,17 @@
       line-height: 1.35;
       color: var(--mint-700);
       transition: transform 190ms ease, opacity 190ms ease;
+      word-break: keep-all;
     }
 
     #message.pop {
       transform: scale(1.02);
       opacity: 0.96;
+    }
+
+    #message.swap {
+      opacity: 0;
+      transform: translateY(8px);
     }
 
     .hint {
@@ -179,10 +211,23 @@
       to { transform: translateY(8px); }
     }
 
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    @keyframes wave {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(8deg); }
+      50% { transform: rotate(-6deg); }
+      75% { transform: rotate(8deg); }
+    }
+
     @media (max-width: 640px) {
       .card { border-radius: 26px; }
       button, .tag { width: 100%; text-align: center; }
       .actions { gap: 10px; }
+      .hero-top { align-items: flex-start; }
     }
   </style>
 </head>
@@ -190,7 +235,12 @@
   <div class="sparkles" aria-hidden="true"></div>
 
   <main class="card">
-    <span class="pill">Soft Mood</span>
+    <div class="hero-top">
+      <span class="pill">Soft Mood</span>
+      <div class="mascot" aria-hidden="true">
+        <span class="mascot-emoji">🐰</span>
+      </div>
+    </div>
     <h1>Өдрийн мэнд, <span class="name">Ундрах</span></h1>
     <p class="sub">Өнөөдөртөө зөөлөн, өөртөө хайртай байгаарай. Нэг даралт хийгээд өөрийгөө улам гоё энергиэр цэнэглээрэй.</p>
 
@@ -220,9 +270,13 @@
 
     button.addEventListener("click", () => {
       const i = Math.floor(Math.random() * messages.length);
-      messageEl.classList.add("pop");
-      messageEl.textContent = messages[i];
-      setTimeout(() => messageEl.classList.remove("pop"), 200);
+      messageEl.classList.add("swap");
+      setTimeout(() => {
+        messageEl.textContent = messages[i];
+        messageEl.classList.remove("swap");
+        messageEl.classList.add("pop");
+        setTimeout(() => messageEl.classList.remove("pop"), 220);
+      }, 140);
     });
   </script>
 </body>
